@@ -16,7 +16,8 @@ export default new Elysia({ aot: false })
 	.get("/", () => new Response(undefined, { status: 418 }))
 	.get("/ping/", () => new Response("pong", { status: 200 })) // TODO: can be used to track launches
 	.get("/protocol/*", async context => {
-		const strippedPath = context.path.slice("/protocol/".length);
+		const { url } = context.request
+		const strippedPath = url.pathname.slice("/protocol/".length) + url.search + url.hash;
 		const html = `
 <!DOCTYPE html>
 <html lang="en">
